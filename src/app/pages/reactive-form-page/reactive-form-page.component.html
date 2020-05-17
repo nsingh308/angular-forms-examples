@@ -1,0 +1,45 @@
+<div>
+  <p>Reactive Approach of Angular Forms</p>
+  <form (ngSubmit)="onSubmit()" [formGroup]="sampleInputFormGroup">
+    <div>
+      <input id="username" formControlName="username" />
+      <div
+        *ngIf="
+          !sampleInputFormGroup.get('username').valid &&
+          sampleInputFormGroup.get('username').touched
+        "
+      >
+        <span *ngIf="sampleInputFormGroup.get('username').hasError('required')"
+          >Username is required</span
+        >
+        <span *ngIf="sampleInputFormGroup.get('username').hasError('userBlocked')"
+          >User is blocked</span
+        >
+      </div>
+      <br />
+      <input id="email" formControlName="email" />
+      <div
+        *ngIf="
+          !sampleInputFormGroup.get('email').valid &&
+          sampleInputFormGroup.get('email').touched
+        "
+      >
+        <span *ngIf="sampleInputFormGroup.get('email').hasError('required')"
+          >Email field is required</span
+        >
+        <span *ngIf="sampleInputFormGroup.get('email').hasError('email')"
+          >Please enter a valid email</span
+        >
+        <span *ngIf="sampleInputFormGroup.get('email').hasError('emailAlreadyTaken')"
+        >Email is already taken</span
+      >
+      </div>
+      <br />
+    </div>
+    <div>
+      <button type="submit" [disabled]="sampleInputFormGroup.invalid">
+        Login
+      </button>
+    </div>
+  </form>
+</div>

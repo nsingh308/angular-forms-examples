@@ -1,0 +1,67 @@
+<div>
+<p>Template Driven Approach of Angular Forms</p>
+<form #f="ngForm" (ngSubmit)="onSubmit()" >
+    <div id="inputDiv" class="form-group" ngModelGroup="userData"
+         #userData="ngModelGroup" >
+        <label for="username"></label>
+        <input id="username" name="username" 
+        minlength="3"
+        maxlength="10"
+        required 
+        [ngModel]="defaultUsername" 
+        #username="ngModel"
+        class="form-control" >
+    <button type="button" (click)="onSuggestUsernameClicked()"  >Suggest Username</button>
+    <div *ngIf="username.touched && !username.valid">
+         <div *ngIf="username.errors.required">
+            username is required
+        </div>
+        <div *ngIf="username.errors.minlength">
+            username minimum length is
+          {{ username.errors.minlength.requiredLength }}
+        </div>
+        <div *ngIf="username.errors.maxlength">
+            username maximum length is
+          {{ username.errors.maxlength.requiredLength }}
+        </div> 
+    </div>
+
+        <!-- Dynamic way of loading select options-->
+    <select ngModel name="person">
+        <option *ngFor="let myOption of myOptions" [value]="myOption.id"> 
+            {{ myOption.name }}
+        </option>
+        </select>
+        <label>
+        <input type="checkbox" ngModel name="like"> Like this article?
+        </label>
+    </div>
+    <span *ngIf="!userData.valid && userData.touched">
+        User data is invalid
+    </span>
+    <hr/><br/>
+    <!--Static way of loading radio buttons-->
+    <!-- <div id="radioDiv" >
+        <label>
+            <input type="radio" ngModel name="clap" value="2"> 2 claps?
+          </label><label>
+            <input type="radio" ngModel name="clap" value="3"> 3 claps?
+          </label>
+
+    </div> -->
+    <!--dynamic way of loading radio button-->
+    <div>
+        <label *ngFor="let radioBtn of radioButtons">
+            <input type="radio" ngModel name="clap" [value]="radioBtn.id"> 
+            {{ radioBtn.name }}
+          </label>
+    </div>
+
+    <button type="submit" [disabled]="!f.valid" >Submit</button>
+</form>
+<div *ngIf="submitted">
+    <h3>Username: {{user.username}}</h3>
+    <h3>Selected: {{user.selected}}</h3>
+    <h3>Liked: {{user.liked}}</h3>
+</div>
+</div>
